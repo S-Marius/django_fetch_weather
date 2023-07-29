@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block site_title_page %}{% endblock %}
+{% block page_content_title %}Welcome to {{ SITE_TITLE }}!{% endblock %}
+
+{% block page_content %}
+    {% if weather_data %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="row g-3 align-items-center justify-content-center">
+            <div class="col-auto">
+              <label for="locationInput" class="col-form-label">Location</label>
+            </div>
+
+            <div class="col-auto">
+              <input type="text" id="locationInput" class="form-control" name="location" placeholder="ex: Rome">
+            </div>
+
+            <div class="col-auto">
+                <label for="countryCodeInput" class="col-form-label">Country Code</label>
+            </div>
+
+            <div class="col-auto">
+                <input type="text" id="countryCodeInput" class="form-control" name="country-code" placeholder="ex: IT">
+            </div>
+        </div>
+
+        <br>
+
+        <button type="submit" class="btn btn-dark">Fetch!</button>
+    </form>
+
+    <br>
+
+    <div class="d-flex justify-content-center">
+        <div>
+            <h1 class="fw-bold">{{ weather_data.location }}, {{ weather_data.country_code }}</h1>
+            <br>
+        
+            <div class="card">
+                <img src="http://openweathermap.org/img/wn/{{weather_data.weather_icon}}.png" class="card-img-top rounded-circle" alt="weather icon">
+                <hr>
+                <div class="card-body">
+                  <h5 class="card-title">Weather: {{ weather_data.weather_name }}</h5>
+                  <br>
+                  <h5 class="card-text fw-bold">Temp: {{ weather_data.temperature }}°C</h5>
+                  <br>
+                  <p class="card-text">Pressure: {{ weather_data.pressure }} Pa</p>
+                  <p class="card-text">Humidity: {{ weather_data.humidity }}%</p>
+                  <p class="card-text">Wind Speed: {{ weather_data.wind_speed }} km/h</p>
+                  <p class="card-text">Cloudiness: {{ weather_data.cloudiness }}%</p>
+                </div>
+            </div>
+            <br>
+        </div>
+    {% else %}
+    <h3 class="fw-light mt-4">Insert LOCATION Info</h3>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="row g-3 align-items-center justify-content-center">
+            <div class="col-auto">
+              <label for="locationInput" class="col-form-label">Location</label>
+            </div>
+
+            <div class="col-auto">
+              <input type="text" id="locationInput" class="form-control" name="location" placeholder="ex: Rome">
+            </div>
+
+            <div class="col-auto">
+                <label for="countryCodeInput" class="col-form-label">Country Code</label>
+            </div>
+
+            <div class="col-auto">
+                <input type="text" id="countryCodeInput" class="form-control" name="country-code" placeholder="ex: IT">
+            </div>
+        </div>
+
+        <br>
+
+        <button type="submit" class="btn btn-dark">Fetch!</button>
+    </form>
+    {% endif %} 
+{% endblock %}
